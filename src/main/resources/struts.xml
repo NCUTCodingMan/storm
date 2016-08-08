@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+    "http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<package name="struts2" extends="struts-default">
+		<!-- 登录验证 -->
+		<action name="login" class="com.rain.action.LoginAction">
+			<result name="success" type="redirect">index.jsp</result>
+			<result name="input">login.jsp</result>
+		</action>
+	</package>
+	
+	<!-- 商品管理模块 -->
+	<package name="good" extends="struts-default" namespace="/good">
+		<!-- struts2的拦截器仅仅只是对action进行拦截验证,但是如果直接访问页面该怎么办 -->
+		<!-- 配置默认的拦截器 -->
+		<interceptors>
+			<!-- 登录拦截器 -->
+			<interceptor name="loginInterceptor" class="com.rain.interceptor.LoginInterceptor">
+			</interceptor>
+			<!-- 自定义拦截器栈 -->
+			<interceptor-stack name="myDefaultInterceptor">
+				<interceptor-ref name="loginInterceptor"></interceptor-ref>
+				<interceptor-ref name="defaultStack"></interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+		 
+		<default-interceptor-ref name="myDefaultInterceptor"></default-interceptor-ref>
+		
+		<!-- 全局result设置 -->
+		<global-results>
+			<!-- 未登录情况下访问系统将会拦截到登录界面 -->
+			<result name="login">/error.jsp</result>
+		</global-results>
+		
+		<!-- 查看所有商品 -->
+		<action name="viewGood" class="com.rain.action.GoodAction" method="queryAllGood">
+			<result name="success">listGood.jsp</result>
+			<result name="input">/index.jsp</result>
+		</action>
+		<!-- 添加商品 -->
+		<action name="createGood" class="com.rain.action.GoodAction" method="createGood">
+			<!-- <result name="success">createGood.jsp</result> -->
+			<result name="success" type="redirectAction">
+				<param name="actionName">viewGood</param>
+			</result> 
+			<result name="input" type="redirect">/index.jsp</result>
+		</action>
+		<!-- 修改商品 -->
+		<action name="editGood" class="com.rain.action.GoodAction" method="editGood">
+			<result name="success" type="redirectAction">
+				<param name="actionName">viewGood</param>
+			</result>
+			<result name="input">/index.jsp</result>
+		</action>
+		<!-- 删除商品 -->
+		<action name="deleteGood" class="com.rain.action.GoodAction" method="deleteGood">
+			<result name="success" type="redirectAction">
+				<param name="actionName">viewGood</param>
+			</result>
+			<result name="input">/index.jsp</result>
+		</action>
+	</package>
+</struts>
