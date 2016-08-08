@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<taglib xmlns="http://java.sun.com/xml/ns/j2ee"
+xmlns:xsi="http://www.w3g.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee web-jsptaglibrary_2_0.xsd"
+version="2.0">
+	<description>Tag with body</description>
+	<tlib-version>1.0</tlib-version>
+ 	<jsp-version>2.0</jsp-version>
+ 	<short-name>TagWithBody</short-name>
+ 	<!-- 此处定义uri之后无需在web.xml中再定义了 -->
+ 	<uri>/TagWithBodylib</uri>
+ 	<small-icon></small-icon>
+ 	 
+ 	<tag>
+  		<name>loop</name>
+  		<tag-class>com.rain.taglib.TagWithBody</tag-class>
+  		<body-content>JSP</body-content>
+  		
+	  	<attribute>
+	   		<name>count</name>
+	   		<required>true</required>
+	   		<type>java.lang.Integer</type>
+	   		<!-- 支持运行时表达式取值,如jsp的表达式脚本 -->
+	   		<rtexprvalue>true</rtexprvalue>
+	  	</attribute>
+  	
+  	</tag>
+</taglib>
